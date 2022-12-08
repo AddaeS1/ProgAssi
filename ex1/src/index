@@ -1,0 +1,18 @@
+const express = require('express');
+const rotas = require('./roteador')
+
+const {listagemProdutos, obterProdutoID, frete} = require('./controladores/calculaFrete')
+
+const app = express();
+
+app.get('/produtos', listagemProdutos );
+app.get('/produtos/:id', obterProdutoID );
+app.get('/produtos/:id/frete/', frete );
+
+app.use(rotas);
+
+
+app.listen(8080);
+
+
+

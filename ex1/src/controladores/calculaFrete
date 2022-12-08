@@ -1,0 +1,52 @@
+const produtos = require('../produtos');
+const { getStateFromZipcode } = require('utils-playground')
+
+const listagemProdutos = (req,res) => {
+    return res.json(produtos);
+}
+
+
+const obterProdutoID = (req,res) => {
+    const { id }  = req.params
+
+    const produto = produtos.find((produto) => {
+        produto.id === Number(id)
+    });
+
+    return res.json(produto)
+}
+
+
+const frete = (req,res) => {
+    const { cep } = req.query;
+    const newCep = cep.toString();
+    const estado = getStateFromZipcode(newCep);
+
+    estado.then(estado => {
+       
+        if(estado === 'BA' || estado === 'SE' || estado === 'AL' || estado === 'PE' || estado === 'PB'){
+            return console.log(valorProduto.produtos * 0.10);
+        } else
+            if(estado === 'SP' || estado === 'RJ'){
+            return console.log(valorProduto.produtos * 0.15);
+        }else{
+            return console.log(valorProduto.produtos * 0.12);
+        }
+
+    });
+
+    estado.catch((erro) => {
+        console.log(erro);
+    })
+
+}
+
+module.exports = {
+    listagemProdutos,
+    obterProdutoID,
+    frete
+}
+
+
+
+
